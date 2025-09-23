@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-/// Storage service for local data persistence
-/// Handles storing and retrieving data locally using GetStorage
 class StorageService extends GetxService {
   /// Keys for storing data
   static const String _keyProducts = 'cached_products';
@@ -13,7 +11,6 @@ class StorageService extends GetxService {
   static const Duration cacheExpiry = Duration(hours: 1);
 
   /// Save products to local storage
-  /// [products] - List of product data to store
   Future<void> saveProducts(List<Map<String, dynamic>> products) async {
     try {
       await Get.find<GetStorage>().write(_keyProducts, products);
@@ -26,8 +23,6 @@ class StorageService extends GetxService {
     }
   }
 
-  /// Get cached products from local storage
-  /// Returns cached products if available and not expired, null otherwise
   List<Map<String, dynamic>>? getCachedProducts() {
     try {
       final lastFetchTime = Get.find<GetStorage>().read<int>(_keyLastFetchTime);
@@ -62,7 +57,6 @@ class StorageService extends GetxService {
   }
 
   /// Get cached categories from local storage
-  /// Returns cached categories if available, null otherwise
   List<String>? getCachedCategories() {
     try {
       final categories = Get.find<GetStorage>().read<List>(_keyCategories);

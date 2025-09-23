@@ -1,7 +1,5 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// Size constants using flutter_screenutil for responsive design
-/// All sizes should use this utility for consistent sizing across devices
 class Sizer {
   /// Spacing constants
   static double spacing4 = 4.w;

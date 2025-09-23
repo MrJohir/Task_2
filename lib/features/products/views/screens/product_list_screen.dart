@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:task_2/features/products/views/widgets/search_bar_widget.dart';
 import '../../../../core/common/styles/global_text_style.dart';
 import '../../../../core/utils/constants/app_colors.dart';
 import '../../../../core/utils/constants/app_texts.dart';
@@ -9,10 +10,7 @@ import '../../controllers/product_controller.dart';
 import '../widgets/category_filter_widget.dart';
 import '../widgets/product_card_widget.dart';
 import '../widgets/product_shimmer_widget.dart';
-import '../widgets/search_bar_widget.dart';
 
-/// Product list screen displaying all products with search and filter functionality
-/// Main screen of the application showing product grid with various features
 class ProductListScreen extends StatelessWidget {
   const ProductListScreen({super.key});
 
@@ -20,7 +18,15 @@ class ProductListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: _buildAppBar(),
+      appBar: AppBar(
+        title: Text(
+          AppTexts.productListTitle,
+          style: AppTextStyles.appBarTitle,
+        ),
+        backgroundColor: AppColors.primary,
+        elevation: 0,
+        centerTitle: true,
+      ),
       body: GetBuilder<ProductController>(
         init: ProductController(),
         builder: (controller) {
@@ -34,7 +40,17 @@ class ProductListScreen extends StatelessWidget {
               ),
 
               // Category filter
-              _buildCategoryFilter(controller),
+              Obx(() {
+                if (controller.categories.isEmpty) {
+                  return const SizedBox.shrink();
+                }
+
+                return CategoryFilterWidget(
+                  categories: controller.categories,
+                  selectedCategory: controller.selectedCategory,
+                  onCategoryChanged: controller.filterByCategory,
+                );
+              }),
 
               SizedBox(height: Sizer.spacing16),
 
@@ -47,55 +63,8 @@ class ProductListScreen extends StatelessWidget {
     );
   }
 
-  /// Build app bar with title
-  PreferredSizeWidget _buildAppBar() {
-    return AppBar(
-      title: Text(AppTexts.productListTitle, style: AppTextStyles.appBarTitle),
-      backgroundColor: AppColors.primary,
-      elevation: 0,
-      centerTitle: true,
-      actions: [
-        GetBuilder<ProductController>(
-          builder: (controller) => IconButton(
-            icon: const Icon(Icons.refresh, color: Colors.white),
-            onPressed: () {
-              // Manually trigger refresh to see shimmer effect
-              controller.refreshProducts();
-            },
-            tooltip: 'Refresh to see shimmer',
-          ),
-        ),
-        IconButton(
-          icon: const Icon(Icons.animation, color: Colors.white),
-          onPressed: () {
-            // Navigate to shimmer demo screen
-            Get.toNamed('/shimmer-demo');
-          },
-          tooltip: 'View Shimmer Demo',
-        ),
-      ],
-    );
-  }
-
-  /// Build category filter section
-  /// [controller] - Product controller instance
-  Widget _buildCategoryFilter(ProductController controller) {
-    return Obx(() {
-      if (controller.categories.isEmpty) {
-        return const SizedBox.shrink();
-      }
-
-      return CategoryFilterWidget(
-        categories: controller.categories,
-        selectedCategory: controller.selectedCategory,
-        onCategoryChanged: controller.filterByCategory,
-      );
-    });
-  }
-
   /// Build main products content area
   /// Handles different states: loading, error, empty, and success
-  /// [controller] - Product controller instance
   Widget _buildProductsContent(ProductController controller) {
     return Obx(() {
       // Loading state
@@ -120,7 +89,6 @@ class ProductListScreen extends StatelessWidget {
 
   /// Build error state UI
   /// Shows error message with retry button
-  /// [controller] - Product controller instance
   Widget _buildErrorState(ProductController controller) {
     return Center(
       child: Padding(
@@ -197,7 +165,6 @@ class ProductListScreen extends StatelessWidget {
 
   /// Build product grid with pull-to-refresh
   /// Shows grid of product cards with refresh functionality
-  /// [controller] - Product controller instance
   Widget _buildProductGrid(ProductController controller) {
     return RefreshIndicator(
       onRefresh: controller.refreshProducts,

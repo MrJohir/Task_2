@@ -1,5 +1,4 @@
-/// Application text constants
-/// Contains all static text used throughout the app
+
 class AppTexts {
   /// App information
   static const String appName = 'Product Store';

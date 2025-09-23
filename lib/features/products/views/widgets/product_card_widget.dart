@@ -6,8 +6,6 @@ import '../../../../core/utils/constants/sizer.dart';
 import '../../../../core/utils/helpers/app_helper.dart';
 import '../../models/product_model.dart';
 
-/// Product card widget for displaying product information
-/// Shows product image, title, price, rating, and category
 class ProductCardWidget extends StatelessWidget {
   /// Product data to display
   final Product product;
@@ -22,7 +20,6 @@ class ProductCardWidget extends StatelessWidget {
     return Card(
       elevation: Sizer.cardElevation,
       color: AppColors.cardBackground,
-      margin: EdgeInsets.all(Sizer.marginSmall),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(Sizer.radiusMedium),
       ),
@@ -30,7 +27,7 @@ class ProductCardWidget extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(Sizer.radiusMedium),
         child: Padding(
-          padding: EdgeInsets.all(Sizer.paddingMedium),
+          padding: EdgeInsets.all(Sizer.spacing12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -40,7 +37,14 @@ class ProductCardWidget extends StatelessWidget {
               SizedBox(height: Sizer.spacing8),
 
               // Product title
-              _buildProductTitle(),
+              Text(
+                product.getTruncatedTitle(30),
+                style: AppTextStyles.caption.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
 
               SizedBox(height: Sizer.spacing8),
 
@@ -62,7 +66,7 @@ class ProductCardWidget extends StatelessWidget {
   /// Shows product image with error and loading handling
   Widget _buildProductImage() {
     return Container(
-      height: 100.h,
+      height: 120.h,
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(Sizer.radiusMedium),
@@ -88,17 +92,6 @@ class ProductCardWidget extends StatelessWidget {
           },
         ),
       ),
-    );
-  }
-
-  /// Build product title section
-  /// Shows truncated product title
-  Widget _buildProductTitle() {
-    return Text(
-      product.getTruncatedTitle(30),
-      style: AppTextStyles.caption.copyWith(fontWeight: FontWeight.w600),
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
     );
   }
 
@@ -145,28 +138,22 @@ class ProductCardWidget extends StatelessWidget {
         SizedBox(width: Sizer.spacing4),
 
         // Rating
-        _buildRating(),
-      ],
-    );
-  }
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.star, color: AppColors.secondary, size: 12.sp),
 
-  /// Build rating section with stars
-  /// Shows star icon and rating value
-  Widget _buildRating() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(Icons.star, color: AppColors.secondary, size: 12.sp),
+            SizedBox(width: 2.w),
 
-        SizedBox(width: 2.w),
-
-        Text(
-          product.rating.rate.toStringAsFixed(1),
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.secondary,
-            fontWeight: FontWeight.w600,
-            fontSize: 10.sp,
-          ),
+            Text(
+              product.rating.rate.toStringAsFixed(1),
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.secondary,
+                fontWeight: FontWeight.w600,
+                fontSize: 10.sp,
+              ),
+            ),
+          ],
         ),
       ],
     );

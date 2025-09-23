@@ -4,8 +4,6 @@ import '../../../../core/utils/constants/app_colors.dart';
 import '../../../../core/utils/constants/app_texts.dart';
 import '../../../../core/utils/constants/sizer.dart';
 
-/// Search bar widget for product search functionality
-/// Provides text input with search icon and clear functionality
 class SearchBarWidget extends StatelessWidget {
   /// Text editing controller for search input
   final TextEditingController controller;

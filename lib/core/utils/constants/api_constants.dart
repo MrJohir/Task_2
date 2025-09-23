@@ -1,5 +1,3 @@
-/// API constants for the application
-/// Contains all API endpoints and configuration
 class ApiConstants {
   /// Base URL for fake store API
   static const String baseUrl = 'https://fakestoreapi.com';

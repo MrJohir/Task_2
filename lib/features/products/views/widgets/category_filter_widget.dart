@@ -7,7 +7,6 @@ import '../../../../core/utils/constants/sizer.dart';
 import '../../controllers/product_controller.dart';
 
 /// Category filter dropdown widget
-/// Allows users to filter products by category
 class CategoryFilterWidget extends StatelessWidget {
   /// List of available categories
   final List<String> categories;
@@ -115,7 +114,6 @@ class CategoryFilterWidget extends StatelessWidget {
   }
 
   /// Get appropriate icon for category
-  /// [category] - Category name
   /// Returns corresponding icon for the category
   IconData _getCategoryIcon(String category) {
     switch (category.toLowerCase()) {

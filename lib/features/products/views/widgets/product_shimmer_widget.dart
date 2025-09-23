@@ -4,8 +4,6 @@ import 'package:shimmer/shimmer.dart';
 import '../../../../core/utils/constants/app_colors.dart';
 import '../../../../core/utils/constants/sizer.dart';
 
-/// Shimmer loading widget for product cards
-/// Shows skeleton loading animation while data is being fetched
 class ProductShimmerWidget extends StatelessWidget {
   /// Number of shimmer items to show
   final int itemCount;

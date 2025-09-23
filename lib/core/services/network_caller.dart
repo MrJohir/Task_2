@@ -3,14 +3,9 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import '../utils/logging/logger.dart';
 
-/// Network caller service for API communication
-/// Handles all HTTP requests with error handling and logging
 class NetworkCaller {
   static const Duration _timeoutDuration = Duration(seconds: 30);
 
-  /// Make GET request
-  /// [url] - API endpoint URL
-  /// Returns Map<String, dynamic> response or throws exception
   static Future<Map<String, dynamic>> getRequest(String url) async {
     try {
       AppLogger.info('Making GET request to: $url');
@@ -32,9 +27,7 @@ class NetworkCaller {
     }
   }
 
-  /// Make GET request that returns a list
-  /// [url] - API endpoint URL
-  /// Returns List<dynamic> response or throws exception
+
   static Future<List<dynamic>> getListRequest(String url) async {
     try {
       AppLogger.info('Making GET list request to: $url');
@@ -63,10 +56,6 @@ class NetworkCaller {
     }
   }
 
-  /// Make POST request
-  /// [url] - API endpoint URL
-  /// [body] - Request body data
-  /// Returns Map<String, dynamic> response or throws exception
   static Future<Map<String, dynamic>> postRequest(
     String url,
     Map<String, dynamic> body,
@@ -97,10 +86,6 @@ class NetworkCaller {
     return {'Content-Type': 'application/json', 'Accept': 'application/json'};
   }
 
-  /// Handle HTTP response
-  /// [response] - HTTP response object
-  /// [url] - Request URL for logging
-  /// Returns parsed response data or throws exception
   static Map<String, dynamic> _handleResponse(
     http.Response response,
     String url,
@@ -138,9 +123,6 @@ class NetworkCaller {
     }
   }
 
-  /// Get user-friendly error message based on status code
-  /// [statusCode] - HTTP status code
-  /// Returns appropriate error message
   static String _getErrorMessage(int statusCode) {
     switch (statusCode) {
       case 400:
